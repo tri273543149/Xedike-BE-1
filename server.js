@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 // const cors = require("cors");
 
+const config = require("./config");
+
 mongoose
-  .connect("mongodb://localhost:27017/xedike", {
+  .connect(config.mongoUri, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

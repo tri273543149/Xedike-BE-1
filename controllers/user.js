@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const config = require("../config");
 
 const { validateRegister } = require("../validations/user/register");
 const { validateLogin } = require("../validations/user/login");
@@ -65,7 +66,7 @@ const login = (req, res) => {
           address: user.address,
         };
 
-        const KEY = "Cybersoft" + fingerprint;
+        const KEY = config.secretKey + fingerprint;
         jwt.sign(payload, KEY, { expiresIn: "1h" }, (err, token) => {
           if (err) return res.status(400).json(err);
           return res.status(200).json({ msg: "Sign in successed", token });
@@ -76,7 +77,7 @@ const login = (req, res) => {
 };
 
 const uploadAvatar = (req, res) => {
-  const  _id  = req.params.userId;
+  const _id = req.params.userId;
   User.findById(_id)
     .then((user) => {
       if (!user) return Promise.reject({ err: "User is not exist" });

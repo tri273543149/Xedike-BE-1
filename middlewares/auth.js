@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config");
 
 const authenticating = (req, res, next) => {
   const token = req.header("Authorization");
   const fingerprint = req.header("fingerprint");
-  const KEY = "Cybersoft" + fingerprint;
+  const KEY = config.secretKey + fingerprint;
   try {
     const decoded = jwt.verify(token, KEY);
     req.user = decoded;
